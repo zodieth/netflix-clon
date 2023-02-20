@@ -4,14 +4,6 @@ import { RootState } from "./store";
 import axios from "axios";
 import requests from "../utils/requests";
 
-// export const postClaim = (value: any) => {
-//   axios.post("https://henry-pf-back.up.railway.app/claims", value);
-//   return {
-//     type: ActionTypes.POST_CLAIM,
-//     payload: value,
-//   };
-// };
-
 export const moviesLoading = () => ({
   type: ActionTypes.MOVIES_LOADING,
 });
@@ -27,29 +19,36 @@ export const fetchMoviesApi =
   (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
     dispatch(moviesLoading());
 
-    // const netflixOriginals = await axios
-    //   .get(requests.fetchNetflixOriginals)
-    //   .then((res) => res.data);
+    const [
+      netflixOriginals,
+      trendingNow,
+      topRated,
+      actionMovies,
+      comedyMovies,
+      horrorMovies,
+      romanceMovies,
+      documentaries,
+    ] = await Promise.all([
+      fetch(requests.fetchNetflixOriginals).then((res) => res.json()),
+      fetch(requests.fetchTrending).then((res) => res.json()),
+      fetch(requests.fetchTopRated).then((res) => res.json()),
+      fetch(requests.fetchActionMovies).then((res) => res.json()),
+      fetch(requests.fetchComedyMovies).then((res) => res.json()),
+      fetch(requests.fetchHorrorMovies).then((res) => res.json()),
+      fetch(requests.fetchRomanceMovies).then((res) => res.json()),
+      fetch(requests.fetchDocumentaries).then((res) => res.json()),
+    ]);
 
-    // dispatch(addMovies(netflixOriginals));
-    // console.log(netflixOriginals);
-
-    return await axios
-      .get(requests.fetchNetflixOriginals)
-      .then(
-        function (response) {
-          if (response.status) return response;
-          else {
-            var error = new Error(
-              "Error " + response.status + ": " + response.statusText
-            );
-            throw error;
-          }
-        },
-        function (error) {
-          var errMess = new Error(error.message);
-          throw errMess;
-        }
-      )
-      .then((data) => dispatch(addMovies(data.data)));
+    dispatch(
+      addMovies({
+        netflixOriginals: netflixOriginals.results,
+        trendingNow: trendingNow.results,
+        topRated: topRated.results,
+        actionMovies: actionMovies.results,
+        comedyMovies: comedyMovies.results,
+        horrorMovies: horrorMovies.results,
+        romanceMovies: romanceMovies.results,
+        documentaries: documentaries.results,
+      })
+    );
   };

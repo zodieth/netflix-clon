@@ -1,6 +1,7 @@
 import { Movie } from "../../typings";
 
 interface Props {
+  // movie: Movie | DocumentData[]
   movie: Movie;
 }
 
