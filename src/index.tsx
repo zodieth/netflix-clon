@@ -3,14 +3,26 @@ import "./styles/tailwind.css";
 import * as serviceWorker from "./serviceWorker";
 import React from "react";
 import { router } from "./routes/index";
-import { RouterProvider } from "react-router-dom";
+import { Route, RouterProvider, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import { AuthProvider } from "./app/hooks/useAuth";
+import { BrowserRouter } from "react-router-dom";
+import HomePage from "./pages/index";
+import Login from "./pages/Login";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+      {/* <RouterProvider router={router} /> */}
     </Provider>
   </React.StrictMode>
 );
