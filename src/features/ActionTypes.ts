@@ -1,3 +1,7 @@
 export const MOVIES_ADD = "MOVIES_ADD";
 export const MOVIES_LOADING = "MOVIES_LOADING";
 export const MOVIES_FAILED = "MOVIES_FAILED";
+
+export const PRODUCTS_ADD = "PRODUCTS_ADD";
+export const PRODUCTS_LOADING = "PRODUCTS_LOADING";
+export const PRODUCTS_FAILED = "PRODUCTS_FAILED";

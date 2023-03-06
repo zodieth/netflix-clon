@@ -3,6 +3,8 @@ import * as ActionTypes from "../features/ActionTypes";
 import { RootState } from "./store";
 import axios from "axios";
 import requests from "../utils/requests";
+import { getProducts } from "@stripe/firestore-stripe-payments";
+import payments from "../lib/stripe";
 
 export const moviesLoading = () => ({
   type: ActionTypes.MOVIES_LOADING,
@@ -51,4 +53,29 @@ export const fetchMoviesApi =
         documentaries: documentaries.results,
       })
     );
+  };
+
+export const productsLoading = () => ({
+  type: ActionTypes.PRODUCTS_LOADING,
+});
+
+export const addProducts = (value: any) => {
+  return {
+    type: ActionTypes.PRODUCTS_ADD,
+    payload: value,
+  };
+};
+
+export const fetchProducts =
+  (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
+    dispatch(productsLoading());
+
+    const products = await getProducts(payments, {
+      includePrices: true,
+      activeOnly: true,
+    })
+      .then((res) => res)
+      .catch((error) => console.log(error.message));
+
+    dispatch(addProducts(products));
   };

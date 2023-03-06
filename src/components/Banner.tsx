@@ -4,6 +4,7 @@ import { Movie } from "../../typings";
 import { FaPlay } from "react-icons/fa";
 import { InformationCircleIcon } from "@heroicons/react/20/solid";
 import Modal from "./Modal";
+import { useAppSelector } from "../app/hooks";
 interface Props {
   netflixOriginals: Movie[];
 }
@@ -11,14 +12,14 @@ interface Props {
 function Banner({ netflixOriginals }: any) {
   const [showModal, setShowModal] = useState(false);
   const [movie, setMovie] = useState<Movie | null>(null);
-  const [currentMovie, setCurrentMovie] = useState(movie);
+  // const [currentMovie, setCurrentMovie] = useState(movie);
   const [trailer, setTrailer] = useState("");
 
   useEffect(() => {
     setMovie(
-      netflixOriginals[0]?.netflixOriginals[
-        Math.floor(Math.random() * netflixOriginals.length)
-      ]
+      netflixOriginals
+        ? netflixOriginals[Math.floor(Math.random() * netflixOriginals?.length)]
+        : ""
     );
   }, [netflixOriginals]);
 

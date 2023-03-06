@@ -1,30 +1,30 @@
 import * as ActionTypes from "../ActionTypes";
 
-export const Movies = (
+export const Products = (
   state = {
     isLoading: true,
     errMess: null,
-    allMovies: [],
+    allProducts: [],
   },
   action: any
 ) => {
   switch (action.type) {
-    case ActionTypes.MOVIES_ADD:
+    case ActionTypes.PRODUCTS_ADD:
       return {
         ...state,
         isLoading: false,
         errMess: null,
-        allMovies: action.payload,
+        allProducts: action.payload,
       };
 
-    case ActionTypes.MOVIES_LOADING:
+    case ActionTypes.PRODUCTS_LOADING:
       return {
         ...state,
         isLoading: true,
         errMess: null,
       };
 
-    case ActionTypes.MOVIES_FAILED:
+    case ActionTypes.PRODUCTS_FAILED:
       return {
         ...state,
         isLoading: false,

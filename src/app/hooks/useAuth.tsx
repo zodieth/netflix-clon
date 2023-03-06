@@ -8,7 +8,7 @@ import {
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { auth } from "../../firebase";
-import { Navigate, Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface IAuth {
   user: User | null;
@@ -109,8 +109,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 };
 
-// Let's only export the `useAuth` hook instead of the context.
-// We only want to use the hook directly and never the context comopnent.
 export default function useAuth() {
   return useContext(AuthContext);
 }
